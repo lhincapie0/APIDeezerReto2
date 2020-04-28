@@ -40,10 +40,10 @@ public class PlaylistsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.playlist_adapter, null);
-        ImageView playListImage = view.findViewById(R.id.trackIV);
-        TextView playlistNameTV = view.findViewById(R.id.trackNameTV);
-        TextView userCreatorTV = view.findViewById(R.id.trackArtistTV);
-        TextView no_itemsTV = view.findViewById(R.id.no_itemsTV);
+        ImageView playListImage = view.findViewById(R.id.playlistIV);
+        TextView playlistNameTV = view.findViewById(R.id.playlistNameTV);
+        TextView userCreatorTV = view.findViewById(R.id.playlistUserTV);
+        TextView no_itemsTV = view.findViewById(R.id.playlistNbTracksTV);
 
         playlistNameTV.setText(playlists.get(position).getTitle());
         userCreatorTV.setText(playlists.get(position).getUser().getName());

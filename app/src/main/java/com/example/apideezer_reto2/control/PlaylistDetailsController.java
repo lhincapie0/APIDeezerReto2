@@ -3,6 +3,7 @@ package com.example.apideezer_reto2.control;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.bumptech.glide.Glide;
 import com.example.apideezer_reto2.R;
@@ -13,12 +14,13 @@ import com.example.apideezer_reto2.util.Constants;
 import com.example.apideezer_reto2.util.HTTPSWebUtilDomi;
 import com.example.apideezer_reto2.view.MainActivity;
 import com.example.apideezer_reto2.view.PlaylistDetailsActivity;
+import com.example.apideezer_reto2.view.TrackDetailsActivity;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PlaylistDetailsController implements HTTPSWebUtilDomi.OnResponseListener , View.OnClickListener{
+public class PlaylistDetailsController implements HTTPSWebUtilDomi.OnResponseListener , View.OnClickListener, AdapterView.OnItemClickListener{
 
     private PlaylistDetailsActivity activity;
     private HTTPSWebUtilDomi utilDomi;
@@ -33,6 +35,7 @@ public class PlaylistDetailsController implements HTTPSWebUtilDomi.OnResponseLis
         activity.getBackIV().setOnClickListener(this);
         trackAdapter = new TrackAdapter();
         activity.getTracksLV().setAdapter(trackAdapter);
+        activity.getTracksLV().setOnItemClickListener(this);
         loadPlaylistData();
     }
 
@@ -59,7 +62,11 @@ public class PlaylistDetailsController implements HTTPSWebUtilDomi.OnResponseLis
                 activity.runOnUiThread(()->{
                     activity.getPlaylistNameTV().setText(playlist.getTitle());
                     activity.getPlaylistDescriptionTV().setText(playlist.getDescription());
-                    activity.getPlaylistSongsTV().setText(playlist.getNb_tracks()+"");
+                    if(playlist.getDescription().equals(("")))
+                    {
+                        activity.getPlaylistDescriptionTV().setText("No hay descripción para esta lista");
+                    }
+                    activity.getPlaylistSongsTV().setText(" Número de tracks: "+playlist.getNb_tracks()+"");
                     Glide.with(activity).load(playlist.getPicture()).centerCrop().into(activity.getPlaylistIV());
                 });
                 loadTracks();
@@ -106,4 +113,14 @@ public class PlaylistDetailsController implements HTTPSWebUtilDomi.OnResponseLis
         }
 
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Track track = (Track) trackAdapter.getItem(position);
+            Intent i = new Intent(activity, TrackDetailsActivity.class);
+            i.putExtra("trackId", track.getId());
+            activity.startActivity(i);
+    }
+
 }
+

@@ -22,7 +22,7 @@ public class PlaylistDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlist_details);
-        playlistNameTV = findViewById(R.id.trackNameTV);
+        playlistNameTV = findViewById(R.id.nameTrackTV);
         playlistDescriptionTV = findViewById(R.id.playlistDescriptionTV);
         playlistSongsTV = findViewById(R.id.playlistSongsTV);
         playlistIV = findViewById(R.id.playlistIV);

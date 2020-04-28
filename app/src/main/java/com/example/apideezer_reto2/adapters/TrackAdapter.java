@@ -41,9 +41,9 @@ public class TrackAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.track_adapter, null);
-        ImageView trackIV = view.findViewById(R.id.trackIV);
-        TextView trackNameTV = view.findViewById(R.id.trackNameTV);
-        TextView trackArtistTV = view.findViewById(R.id.trackArtistTV);
+        ImageView trackIV = view.findViewById(R.id.imageTrackIV);
+        TextView trackNameTV = view.findViewById(R.id.nameTrackTV);
+        TextView trackArtistTV = view.findViewById(R.id.artistTrackIV);
         TextView trackReleaseDateTV = view.findViewById(R.id.trackReleaseDateTV);
 
         trackNameTV.setText(tracks.get(position).getTitle());

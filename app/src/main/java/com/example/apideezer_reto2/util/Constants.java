@@ -5,4 +5,5 @@ public class Constants {
     public static final int SEARCH_CALLBACK = 1;
     public static final int PLDETAILS_CALLBACK=2;
     public static final int TRACKSEARCH_CALLBACK = 3;
+    public static final int TRACKDETAILS_CALLBACK = 4;
 }

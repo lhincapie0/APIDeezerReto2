@@ -9,6 +9,7 @@ public class Track {
     private Artist artist;
     private Date release_date;
     private Album album;
+    private int duration;
 
     public Track() {
     }
@@ -21,12 +22,21 @@ public class Track {
         this.album = album;
     }
 
-    public Track(long id, String title, Artist artist, Date release_date, Album album) {
+    public Track(long id, String title, Artist artist, Date release_date, Album album, int duration) {
         this.id = id;
         this.title = title;
         this.artist = artist;
+        this.duration = duration;
         this.release_date = release_date;
         this.album = album;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public long getId() {
