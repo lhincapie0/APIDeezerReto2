@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">APIDeezer-Reto2</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="buscar_title">Buscar Playlist</string>
+    <string name="buscar_lista">     Buscar una lista de reproducción</string>
+</resources>
