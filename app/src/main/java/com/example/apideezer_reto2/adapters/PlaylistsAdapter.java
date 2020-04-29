@@ -1,11 +1,14 @@
 package com.example.apideezer_reto2.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.apideezer_reto2.R;
@@ -13,56 +16,86 @@ import com.example.apideezer_reto2.model.Playlist;
 
 import java.util.ArrayList;
 
-public class PlaylistsAdapter extends BaseAdapter {
+public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.ViewHolder> {
 
     private ArrayList<Playlist> playlists;
+    private View.OnClickListener mClickListener;
 
-    public PlaylistsAdapter()
+
+    public PlaylistsAdapter(ArrayList<Playlist> playlists)
     {
-        playlists = new ArrayList<>();
-    }
-    @Override
-    public int getCount() {
-        return playlists.size();
+        this.playlists = playlists;
     }
 
+    public void setClickListener(View.OnClickListener callback) {
+        mClickListener = (View.OnClickListener) callback;
+    }
+
+
+    public void setData(ArrayList<Playlist> playlists)
+    {
+        this.playlists = playlists;
+        notifyDataSetChanged();
+    }
+    @NonNull
     @Override
-    public Object getItem(int position) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.playlist_adapter, parent, false);
+        ViewHolder holder = new ViewHolder(v);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mClickListener.onClick(view);
+            }
+        });
+        return holder;
+    }
+
+    public Playlist getItem(int position)
+    {
         return playlists.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.custom(playlists.get(position));
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.playlist_adapter, null);
-        ImageView playListImage = view.findViewById(R.id.playlistIV);
-        TextView playlistNameTV = view.findViewById(R.id.playlistNameTV);
-        TextView userCreatorTV = view.findViewById(R.id.playlistUserTV);
-        TextView no_itemsTV = view.findViewById(R.id.playlistNbTracksTV);
+    public int getItemCount() {
 
-        playlistNameTV.setText(playlists.get(position).getTitle());
-        userCreatorTV.setText(playlists.get(position).getUser().getName());
-        no_itemsTV.setText(playlists.get(position).getNb_tracks()+"");
-        Glide.with(view).load(playlists.get(position).getPicture()).centerCrop().into(playListImage);
-        return view;
+        return playlists.size();
     }
 
 
-    public void setPlaylists(ArrayList<Playlist> playlists){
-        this.playlists=playlists;
-        notifyDataSetChanged();
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView playlistNameTV, playlistUserTV, playlistNbTracksTV;
+        private ImageView playlistIV;
+        private View view;
+
+        public ViewHolder(View view) {
+            super(view);
+            this. view = view;
+            playlistNameTV = view.findViewById(R.id.playlistNameTV);
+            playlistUserTV = view.findViewById(R.id.playlistUserTV);
+            playlistNbTracksTV = view.findViewById(R.id.playlistNbTracksTV);
+            playlistIV = view.findViewById(R.id.playlistIV);
+            view.setTag(this);
+
+        }
 
 
-    public void addPlaylist(Playlist playlist)
-    {
-        playlists.add(playlist);
-        this.notifyDataSetChanged();
+        // Personalizamos un ViewHolder a partir de un lugar
+        public void custom(Playlist playlist) {
+            playlistNameTV.setText(playlist.getTitle());
+            playlistUserTV.setText(playlist.getUser().getName());
+            playlistNbTracksTV.setText(playlist.getNb_tracks()+"");
+            Glide.with(view).load(playlist.getPicture()).centerCrop().into(playlistIV);
+            Log.e(">>>>>>", "custom");
 
+
+        }
     }
 }

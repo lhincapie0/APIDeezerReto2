@@ -1,6 +1,7 @@
 package com.example.apideezer_reto2.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.EditText;
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText playlistNameET;
     private ImageView searchBut;
-    private ListView playlistLV;
+    private RecyclerView playlistRV;
     private MainController controller;
 
     public EditText getPlaylistNameET() {
@@ -25,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         return searchBut;
     }
 
-    public ListView getPlaylistLV() {
-        return playlistLV;
+    public RecyclerView getPlaylistRV() {
+        return playlistRV;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.playlistNameET = findViewById(R.id.playlistNameET);
         this.searchBut = findViewById(R.id.searchBut);
-        this.playlistLV = findViewById(R.id.playlistLV);
+        this.playlistRV = findViewById(R.id.playlistRV);
         this.controller = new MainController(this);
     }
 }

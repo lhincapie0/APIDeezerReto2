@@ -1,5 +1,9 @@
 package com.example.apideezer_reto2.control;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -7,6 +11,7 @@ import com.example.apideezer_reto2.R;
 import com.example.apideezer_reto2.model.Track;
 import com.example.apideezer_reto2.util.Constants;
 import com.example.apideezer_reto2.util.HTTPSWebUtilDomi;
+import com.example.apideezer_reto2.view.MainActivity;
 import com.example.apideezer_reto2.view.TrackDetailsActivity;
 import com.google.gson.Gson;
 
@@ -16,6 +21,7 @@ public class TrackDetailsController implements HTTPSWebUtilDomi.OnResponseListen
 
     private TrackDetailsActivity activity;
     private HTTPSWebUtilDomi utilDomi;
+    private Track track;
 
 
     public TrackDetailsController(TrackDetailsActivity activity)
@@ -25,7 +31,7 @@ public class TrackDetailsController implements HTTPSWebUtilDomi.OnResponseListen
         utilDomi.setListener(this);
         loadTrackData();
         activity.getEscucharBtn().setOnClickListener(this);
-        
+
     }
 
     private void loadTrackData() {
@@ -47,7 +53,7 @@ public class TrackDetailsController implements HTTPSWebUtilDomi.OnResponseListen
             case Constants.TRACKDETAILS_CALLBACK:
             {
                 Gson g = new Gson();
-                Track track = g.fromJson(response, Track.class);
+                track = g.fromJson(response, Track.class);
                 int dur = track.getDuration();
                 int mins = dur/60;
                 int segs = dur - (mins*60);
@@ -75,7 +81,25 @@ public class TrackDetailsController implements HTTPSWebUtilDomi.OnResponseListen
         {
             case R.id.escucharBtn:
             {
+                Intent i = this.activity.getPackageManager().getLaunchIntentForPackage("deezer.android.app");
+                Uri link = Uri.parse(track.getLink());
+                if(i != null)
+                {
+                    i.setData(link);
+                    activity.startActivity(i);
+                }else
+                {
+                    Intent intent=new Intent(Intent.ACTION_VIEW);
+                    intent.setData(link);
+                    activity.startActivity(intent);
+                }
                 break;
+            }
+            case R.id.backIV:
+            {
+                    Intent i = new Intent(activity, MainActivity.class);
+                    activity.startActivity(i);
+                    break;
             }
         }
 

@@ -10,6 +10,7 @@ public class Track {
     private Date release_date;
     private Album album;
     private int duration;
+    private String link;
 
     public Track() {
     }
@@ -22,7 +23,15 @@ public class Track {
         this.album = album;
     }
 
-    public Track(long id, String title, Artist artist, Date release_date, Album album, int duration) {
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public Track(long id, String title, Artist artist, Date release_date, Album album, int duration, String link) {
         this.id = id;
         this.title = title;
         this.artist = artist;
